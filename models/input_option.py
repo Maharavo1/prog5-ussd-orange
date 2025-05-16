@@ -1,3 +1,7 @@
+from typing import Callable, Optional, Any
+from .menu_option import MenuOption
+from .menu import Menu
+
 class InputOption(MenuOption):
     def __init__(
         self,
@@ -10,19 +14,18 @@ class InputOption(MenuOption):
         self.on_input = on_input
         self.next_menu = next_menu
         self.validator = validator
-        
+
     def get_label(self) -> str:
         return self.label
-        
+
     def get_action(self) -> Optional[Callable[[], Any]]:
         return None
-        
+
     def get_sub_menu(self) -> Optional[Menu]:
         return self.next_menu
-        
+
     def handle_input(self, input_str: str) -> bool:
         if self.validator(input_str):
             self.on_input(input_str)
             return True
         return False
-

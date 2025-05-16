@@ -1,10 +1,10 @@
-rom models.menu import Menu
-from models.menu_option import InputOption
+from models.menu import Menu
+from models.input_option import InputOption
 import re
 import sys
 
 def confirm_code() -> None:
-    print("Operation avec succès !")
+    print("Opération avec succès !")
     print("Fin de la session USSD.")
     sys.exit(0)
 
@@ -20,7 +20,7 @@ def create_confirmation_menu(context: str) -> Menu:
             print("Erreur : Le code doit contenir au moins 2 chiffres différents.")
             return False
         return True
-    
+
     return Menu(
         f"Entrez le code pour confirmer {context}",
         [InputOption(
@@ -33,7 +33,7 @@ def create_confirmation_menu(context: str) -> Menu:
 
 def create_montant_menu(context: str) -> Menu:
     confirmation_menu = create_confirmation_menu(context)
-    
+
     def validate_amount(input_str: str) -> bool:
         try:
             amount = int(input_str)
@@ -44,7 +44,7 @@ def create_montant_menu(context: str) -> Menu:
         except ValueError:
             print("Erreur : Veuillez saisir un nombre entier valide.")
             return False
-    
+
     return Menu(
         f"Entrez le montant pour {context}",
         [InputOption(
@@ -57,13 +57,13 @@ def create_montant_menu(context: str) -> Menu:
 
 def create_numero_menu(context: str) -> Menu:
     montant_menu = create_montant_menu(context)
-    
+
     def validate_number(input_str: str) -> bool:
         if not re.fullmatch(r"\d{10}", input_str):
             print("Erreur : Le numéro doit contenir exactement 10 chiffres.")
             return False
         return True
-    
+
     return Menu(
         f"Entrez le numéro pour {context}",
         [InputOption(
